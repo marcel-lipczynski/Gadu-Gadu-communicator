@@ -1,0 +1,22 @@
+#login-button{
+    /*-fx-background-color: white;*/
+    /*-fx-color: white;*/
+    -fx-border: white;
+    -fx-text-fill: black;
+    -fx-width: 100%;
+}
+
+#username{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+}
+
+#welcome-text{
+    -fx-font-size: 35;
+    -fx-text-fill: aliceblue;
+}
+
+.root{
+    -fx-background-image: url("background-login.jpg");
+}
