@@ -10,7 +10,7 @@ public class ChatClient {
     private PrintWriter msgToServer;
     private String name;
 
-    public ChatClient(String serverAddress, int port,String name) {
+    public ChatClient(String serverAddress, int port, String name) {
         try {
             this.name = name;
             this.socket = new Socket(serverAddress, port);

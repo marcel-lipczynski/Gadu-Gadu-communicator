@@ -1,7 +1,6 @@
 package chat;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
@@ -11,13 +10,16 @@ import javafx.scene.text.Text;
 import login.LoginPageController;
 
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ChatPageController {
+
+    ChatClient chatClient = new ChatClient(LoginPageController.getInstance().getAddress().getText(),
+            Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
+            LoginPageController.getInstance().getUsername_id().getText());
 
     private static ChatPageController instance;
 
@@ -52,6 +54,7 @@ public class ChatPageController {
 
         chatPane.getItems().setAll(messages);
         chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        chatClient.sendMessage(text);
 
 //        userList.getItems().setAll(users);
 //        userList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
