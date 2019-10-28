@@ -1,4 +1,4 @@
-package com.marcellipczynski;
+package clients_logic;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.marcellipczynski;
+package clients_logic;
 
 import java.io.IOException;
 import java.io.PrintWriter;
