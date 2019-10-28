@@ -19,7 +19,7 @@
     <Label text="Enter your username:" id="username"
            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
     <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.columnIndex="1">
-        <TextField/>
+        <TextField fx:id="username"/>
     </HBox>
 
 
@@ -27,7 +27,7 @@
     <Label text="Enter address:" id="username"
            GridPane.columnIndex="0" GridPane.rowIndex="2"/>
     <HBox alignment="CENTER_LEFT" GridPane.rowIndex="2" GridPane.columnIndex="1">
-        <TextField/>
+        <TextField fx:id="address"/>
     </HBox>
 
 
@@ -36,7 +36,7 @@
     <Label text="Enter port:" id="username"
            GridPane.columnIndex="0" GridPane.rowIndex="3"/>
     <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3" GridPane.columnIndex="1">
-        <TextField/>
+        <TextField fx:id="port"/>
     </HBox>
 
 
