@@ -1,5 +1,8 @@
 package clients_logic;
 
+import chat.ChatClient;
+import chat.ChatClientThread;
+
 import java.util.Scanner;
 
 public class Main {

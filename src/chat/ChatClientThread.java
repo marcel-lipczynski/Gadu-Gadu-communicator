@@ -1,4 +1,6 @@
-package clients_logic;
+package chat;
+
+import chat.ChatClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,6 +32,7 @@ public class ChatClientThread implements Runnable {
         try {
             if ((receivedMessage = reader.readLine()) != null) {
                 System.out.println(receivedMessage);
+
             }
 
         } catch (IOException e) {

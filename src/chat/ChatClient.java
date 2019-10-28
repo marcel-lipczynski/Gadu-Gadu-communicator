@@ -1,4 +1,4 @@
-package clients_logic;
+package chat;
 
 import java.io.IOException;
 import java.io.PrintWriter;

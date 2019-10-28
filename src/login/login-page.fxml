@@ -19,7 +19,7 @@
     <Label text="Enter your username:" id="username"
            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
     <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.columnIndex="1">
-        <TextField fx:id="username"/>
+        <TextField fx:id="username_id"/>
     </HBox>
 
 

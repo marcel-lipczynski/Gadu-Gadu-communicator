@@ -1,6 +1,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
 <BorderPane fx:controller="chat.ChatPageController" maxHeight="620.0" maxWidth="1040.0" prefHeight="620.0"
             prefWidth="1040.0"
             xmlns:fx="http://javafx.com/fxml">
@@ -41,5 +42,8 @@
             </children>
         </VBox>
     </left>
+    <top>
+        <Text text="Logged as: " fx:id="loggedAs"/>
+    </top>
 
 </BorderPane>
