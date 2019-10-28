@@ -21,10 +21,15 @@ public class ChatPageController {
             Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
             LoginPageController.getInstance().getUsername_id().getText());
 
+    private Thread messageReader = new Thread(new ChatClientThread(chatClient));
+
+
+
     private static ChatPageController instance;
 
     public ChatPageController() {
         instance = this;
+        messageReader.start();
     }
 
     //    private LoginPageController loginPageController;
@@ -48,7 +53,6 @@ public class ChatPageController {
     public void handleSendButtonClick() {
 
         String text = messageBox.getText();
-
         messages.add(text);
 //        users.add(LoginPageController.getInstance().getUsername_id().getText());
 
@@ -64,7 +68,7 @@ public class ChatPageController {
     }
 
     @FXML
-    public void handleEnterKey(KeyEvent event) throws IOException {
+    public void handleEnterKey(KeyEvent event){
         if (event.getCode() == KeyCode.ENTER) {
             handleSendButtonClick();
         }
@@ -76,5 +80,13 @@ public class ChatPageController {
 
     public static ChatPageController getInstance() {
         return instance;
+    }
+
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    public ListView getChatPane() {
+        return chatPane;
     }
 }
