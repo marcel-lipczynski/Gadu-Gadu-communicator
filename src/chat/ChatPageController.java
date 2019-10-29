@@ -17,11 +17,13 @@ import java.util.List;
 
 public class ChatPageController {
 
-    ChatClient chatClient = new ChatClient(LoginPageController.getInstance().getAddress().getText(),
-            Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
-            LoginPageController.getInstance().getUsername_id().getText());
+    private ChatClient chatClient ;
+//            = new ChatClient(LoginPageController.getInstance().getAddress().getText(),
+//            Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
+//            LoginPageController.getInstance().getUsername_id().getText());
 
-    private Thread messageReader = new Thread(new ChatClientThread(chatClient));
+    private Thread messageReader ;
+//            = new Thread(new ChatClientThread(chatClient));
 
 
 
@@ -29,7 +31,16 @@ public class ChatPageController {
 
     public ChatPageController() {
         instance = this;
-        messageReader.start();
+        try{
+            chatClient = new ChatClient(LoginPageController.getInstance().getAddress().getText(),
+                    Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
+                    LoginPageController.getInstance().getUsername_id().getText());
+            messageReader = new Thread(new ChatClientThread(chatClient));
+            messageReader.start();
+        }catch(Exception e){
+            System.out.println("Something went horribly wrong: " + e.getMessage());
+        }
+
     }
 
     //    private LoginPageController loginPageController;
@@ -88,5 +99,9 @@ public class ChatPageController {
 
     public ListView getChatPane() {
         return chatPane;
+    }
+
+    public ChatClient getChatClient() {
+        return chatClient;
     }
 }

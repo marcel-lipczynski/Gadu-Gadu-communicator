@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class LoginPageController {
 
 
@@ -31,18 +33,28 @@ public class LoginPageController {
     private TextField username_id;
 
     @FXML
-    public void handleButtonClick() throws Exception {
-
-        Stage primaryStage = (Stage) loginButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../chat/chat.fxml"));
+    public void handleButtonClick() {
 
 
-        primaryStage.setTitle("Simple chat");
-        primaryStage.setScene(new Scene(root, 900, 550));
-        primaryStage.setResizable(false);
+            try{
 
-        ChatPageController.getInstance().getLoggedAs().setText("Logged as: " + username_id.getText());
-        primaryStage.show();
+                Stage primaryStage = (Stage) loginButton.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("../chat/chat.fxml"));
+
+
+                primaryStage.setTitle("Simple chat");
+                primaryStage.setScene(new Scene(root, 900, 550));
+                primaryStage.setResizable(false);
+
+                ChatPageController.getInstance().getLoggedAs().setText("Logged as: " + username_id.getText());
+                primaryStage.show();
+                
+            }catch (IOException e){
+                System.out.println("Server is unavailable");
+                e.printStackTrace();
+            }
+
+
 
 
     }
