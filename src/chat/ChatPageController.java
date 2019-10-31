@@ -17,14 +17,30 @@ import java.util.List;
 
 public class ChatPageController {
 
-    ChatClient chatClient = new ChatClient(LoginPageController.getInstance().getAddress().getText(),
-            Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
-            LoginPageController.getInstance().getUsername_id().getText());
+    private ChatClient chatClient ;
+//            = new ChatClient(LoginPageController.getInstance().getAddress().getText(),
+//            Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
+//            LoginPageController.getInstance().getUsername_id().getText());
+
+    private Thread messageReader ;
+//            = new Thread(new ChatClientThread(chatClient));
+
+
 
     private static ChatPageController instance;
 
     public ChatPageController() {
         instance = this;
+        try{
+            chatClient = new ChatClient(LoginPageController.getInstance().getAddress().getText(),
+                    Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
+                    LoginPageController.getInstance().getUsername_id().getText());
+            messageReader = new Thread(new ChatClientThread(chatClient));
+            messageReader.start();
+        }catch(Exception e){
+            System.out.println("Something went horribly wrong: " + e.getMessage());
+        }
+
     }
 
     //    private LoginPageController loginPageController;
@@ -48,7 +64,6 @@ public class ChatPageController {
     public void handleSendButtonClick() {
 
         String text = messageBox.getText();
-
         messages.add(text);
 //        users.add(LoginPageController.getInstance().getUsername_id().getText());
 
@@ -64,7 +79,7 @@ public class ChatPageController {
     }
 
     @FXML
-    public void handleEnterKey(KeyEvent event) throws IOException {
+    public void handleEnterKey(KeyEvent event){
         if (event.getCode() == KeyCode.ENTER) {
             handleSendButtonClick();
         }
@@ -76,5 +91,17 @@ public class ChatPageController {
 
     public static ChatPageController getInstance() {
         return instance;
+    }
+
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    public ListView getChatPane() {
+        return chatPane;
+    }
+
+    public ChatClient getChatClient() {
+        return chatClient;
     }
 }

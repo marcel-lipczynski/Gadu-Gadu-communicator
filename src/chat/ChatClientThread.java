@@ -1,6 +1,8 @@
 package chat;
 
 import chat.ChatClient;
+import javafx.application.Platform;
+import javafx.scene.control.SelectionMode;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +34,16 @@ public class ChatClientThread implements Runnable {
         try {
             if ((receivedMessage = reader.readLine()) != null) {
                 System.out.println(receivedMessage);
+                ChatPageController.getInstance().getMessages().add(receivedMessage);
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        ChatPageController.getInstance().getChatPane().getItems().setAll(ChatPageController.getInstance().getMessages());
+                        ChatPageController.getInstance().getChatPane().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+                    }
+                });
 
             }
 
