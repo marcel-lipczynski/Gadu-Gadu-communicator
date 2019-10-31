@@ -15,6 +15,7 @@ public class ChatClient {
             this.name = name;
             this.socket = new Socket(serverAddress, port);
             msgToServer = new PrintWriter(socket.getOutputStream(),true);
+            msgToServer.println(name);
         } catch (IOException e) {
             System.out.println("Unable to create socket - no Server to connect: " + e.getMessage());
         }
