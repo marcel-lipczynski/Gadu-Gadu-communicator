@@ -48,7 +48,7 @@ public class LoginPageController {
 
                 ChatPageController.getInstance().getLoggedAs().setText("Logged as: " + username_id.getText());
                 primaryStage.show();
-                
+
             }catch (IOException e){
                 System.out.println("Server is unavailable");
                 e.printStackTrace();
