@@ -37,6 +37,7 @@ public class ChatPageController {
                     LoginPageController.getInstance().getUsername_id().getText());
             messageReader = new Thread(new ChatClientThread(chatClient));
             messageReader.start();
+            chatClient.sendMessage(chatClient.getName());
         }catch(Exception e){
             System.out.println("Something went horribly wrong: " + e.getMessage());
         }
@@ -46,7 +47,7 @@ public class ChatPageController {
     //    private LoginPageController loginPageController;
 
     private List<String> messages = new ArrayList<>();
-//    private List<String> users = new ArrayList<>();
+    private List<String> users = new ArrayList<>();
 
     @FXML
     private ListView userList;
@@ -103,5 +104,13 @@ public class ChatPageController {
 
     public ChatClient getChatClient() {
         return chatClient;
+    }
+
+    public List<String> getUsers() {
+        return users;
+    }
+
+    public ListView getUserList() {
+        return userList;
     }
 }

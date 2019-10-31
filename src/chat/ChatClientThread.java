@@ -14,6 +14,9 @@ public class ChatClientThread implements Runnable {
     private BufferedReader reader;
     private String receivedMessage = null;
 
+    //zmienna ktora posluzy do pobrania listy uzytkownikow z serwera
+    private boolean newlyConnected = true;
+
     public ChatClientThread(ChatClient chatClient) {
         this.chatClient = chatClient;
         try {
@@ -32,18 +35,44 @@ public class ChatClientThread implements Runnable {
 
     private void read() {
         try {
-            if ((receivedMessage = reader.readLine()) != null) {
-                System.out.println(receivedMessage);
-                ChatPageController.getInstance().getMessages().add(receivedMessage);
-
+            if(newlyConnected){
+                while(!(receivedMessage = reader.readLine()).equals("#")){
+                    ChatPageController.getInstance().getUsers().add(receivedMessage);
+                }
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        ChatPageController.getInstance().getChatPane().getItems().setAll(ChatPageController.getInstance().getMessages());
-                        ChatPageController.getInstance().getChatPane().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
+                        ChatPageController.getInstance().getUserList().getItems().setAll(ChatPageController.getInstance().getUsers());
                     }
                 });
+                newlyConnected = false;
+            }
+
+
+            if ((receivedMessage = reader.readLine()) != null) {
+                if(receivedMessage.equals("#")){
+                    //If server sends "#" character, it means that next message to send is new Clients nickname;
+                    ChatPageController.getInstance().getUsers().add(reader.readLine());
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            ChatPageController.getInstance().getUserList().getItems().setAll(ChatPageController.getInstance().getUsers());
+                        }
+                    });
+
+                } else{
+                    System.out.println(receivedMessage);
+                    ChatPageController.getInstance().getMessages().add(receivedMessage);
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            ChatPageController.getInstance().getChatPane().getItems().setAll(ChatPageController.getInstance().getMessages());
+                            ChatPageController.getInstance().getChatPane().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+                        }
+                    });
+                }
 
             }
 

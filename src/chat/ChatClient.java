@@ -15,7 +15,8 @@ public class ChatClient {
             this.name = name;
             this.socket = new Socket(serverAddress, port);
             msgToServer = new PrintWriter(socket.getOutputStream(),true);
-            msgToServer.println(name);
+//            msgToServer.println(name); -> Message should be send after creating new ChatClientThread
+            // so we are sure that client will receive clients names
         } catch (IOException e) {
             System.out.println("Unable to create socket - no Server to connect: " + e.getMessage());
         }
