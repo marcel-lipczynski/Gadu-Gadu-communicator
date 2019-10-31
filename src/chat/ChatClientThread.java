@@ -37,12 +37,17 @@ public class ChatClientThread implements Runnable {
         try {
             if(newlyConnected){
                 while(!(receivedMessage = reader.readLine()).equals("#")){
+                    System.out.println("Received message: " + receivedMessage);
                     ChatPageController.getInstance().getUsers().add(receivedMessage);
+
                 }
+                System.out.println("I received # character: " + receivedMessage );
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         ChatPageController.getInstance().getUserList().getItems().setAll(ChatPageController.getInstance().getUsers());
+                        ChatPageController.getInstance().getUserList().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                        System.out.println("We did it");
                     }
                 });
                 newlyConnected = false;
@@ -57,6 +62,7 @@ public class ChatClientThread implements Runnable {
                         @Override
                         public void run() {
                             ChatPageController.getInstance().getUserList().getItems().setAll(ChatPageController.getInstance().getUsers());
+                            ChatPageController.getInstance().getUserList().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
                         }
                     });
 
@@ -80,5 +86,7 @@ public class ChatClientThread implements Runnable {
             System.out.println("Reading data from server went wrong: " + e.getMessage());
         }
     }
+
+
 }
 
