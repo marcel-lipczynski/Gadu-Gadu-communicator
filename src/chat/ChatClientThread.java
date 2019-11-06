@@ -36,12 +36,14 @@ public class ChatClientThread implements Runnable {
     private void read() {
         try {
             if(newlyConnected){
-                while(!(receivedMessage = reader.readLine()).equals("#")){
-                    System.out.println("Received message: " + receivedMessage);
+                while(!(receivedMessage = reader.readLine()).trim().equals("#")){
+                    System.out.println("Received message: " + receivedMessage + " " +
+                            "length: " + receivedMessage.length());
+
                     ChatPageController.getInstance().getUsers().add(receivedMessage);
 
                 }
-                System.out.println("I received # character: " + receivedMessage );
+                System.out.println("I received stopReadingUsers character: " + receivedMessage );
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
@@ -55,7 +57,7 @@ public class ChatClientThread implements Runnable {
 
 
             if ((receivedMessage = reader.readLine()) != null) {
-                if(receivedMessage.equals("#")){
+                if(receivedMessage.trim().equals("#")){
                     //If server sends "#" character, it means that next message to send is new Clients nickname;
                     ChatPageController.getInstance().getUsers().add(reader.readLine());
                     Platform.runLater(new Runnable() {
