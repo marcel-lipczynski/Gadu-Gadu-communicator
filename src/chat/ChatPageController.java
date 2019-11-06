@@ -68,7 +68,7 @@ public class ChatPageController {
         messages.add(text);
 //        users.add(LoginPageController.getInstance().getUsername_id().getText());
 
-        chatPane.getItems().setAll(messages);
+        chatPane.getItems().setAll(LoginPageController.getInstance().getUsername_id().getText()+": "+messages);
         chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         chatClient.sendMessage(text);
 
