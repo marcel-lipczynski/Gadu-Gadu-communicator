@@ -17,14 +17,18 @@
 #define QUEUE_SIZE 3
 pthread_mutex_t m1 = PTHREAD_MUTEX_INITIALIZER;
 
-int clients[2];
-char names[2][100]; // trzech userów każdy moze miec nazwe po 100 znakow
+int clients[3];
+char names[3][100]; // trzech userów każdy moze miec nazwe po 100 znakow
 int ile;
 //struktura zawierająca dane, które zostaną przekazane do wątku
 struct thread_data_t
 {
 int socket_descriptor;
 char bufor[100];
+char tmpBufor[100];
+//do kogo wyslac wiadomosc?
+char *whoToSend;
+
 };
 
 //funkcja opisującą zachowanie wątku - musi przyjmować argument typu (void *) i zwracać (void *)
@@ -36,13 +40,59 @@ void *ThreadBehavior(void *t_data)
     //TODO (przy zadaniu 1) klawiatura -> wysyłanie albo odbieranie -> wyświetlanie
 	
 while(1){
+	//czysc oba bufory!
 	memset(th_data->bufor, 0, sizeof(th_data->bufor));
+	memset(th_data->tmpBufor, 0, sizeof(th_data->tmpBufor));
+
+	//przeczytaj na poczatek do kogo bedzie wyslana wiadomosc!
+	
+
 	read(th_data->socket_descriptor, th_data->bufor, 100);
 	printf("%s",th_data->bufor);
+	strncpy(th_data->tmpBufor,th_data->bufor,100);
+
+	th_data->whoToSend = strtok(th_data->bufor,":");
+	printf("first word is %s\n",th_data->whoToSend);
+	th_data->whoToSend = strtok(NULL,":");
+	printf("second word is %s\n",th_data->whoToSend);
+	
+	printf("Dlugosc lancucha whoTosend  %d\n",strlen(th_data->whoToSend));
+	printf("Dlugos names[0] %d\n",strlen(names[0]));
+	
+	int czyDobraNazwa=0;	
+
 	for(int i = 0; i<3; i++){
-		if((clients[i] != 0)&&(clients[i] != th_data->socket_descriptor))
-			write(clients[i], th_data->bufor, 100);
-}
+		for(int j = 0; j<strlen(th_data->whoToSend);j++){
+			if(names[i][j] == th_data->whoToSend[j]){
+				printf("Litery są zgodne.\n");	
+				czyDobraNazwa = czyDobraNazwa + 1;
+			}else{
+				czyDobraNazwa = 0;
+				break;	
+			}		
+		}
+		if(czyDobraNazwa == strlen(th_data->whoToSend)){
+			czyDobraNazwa = i;
+			printf("Teraz wiem komu wyslac!\n");
+			printf("Wysylam do %s", names[czyDobraNazwa]);
+			write(clients[czyDobraNazwa], th_data->tmpBufor, 100);
+			break;
+		}	
+	}
+
+		
+
+
+	//for(int i = 0; i<3; i++){
+	//	if(names[i] == th_data->whoToSend){
+	//		printf("Znaleziono takiego uzytkownika :)");
+	//		if(clients[i] != 0)
+	//			write(clients[i], th_data->bufor, 100);
+		//}
+			
+		//if((clients[i] != 0)&&(clients[i] != th_data->socket_descriptor))
+		//	write(clients[i], th_data->bufor, 100);
+//}
 }
 //ilosc bajtow i rozlaczenie klienta
 	free(t_data);
@@ -76,13 +126,13 @@ void handleConnection(int connection_socket_descriptor) {
 	for(int i = 0; i<3; i++){
 		if((clients[i] != 0)&&(clients[i] != clients[ile])&&(strcmp(names[i],""))){
 			write(clients[i],"#\n",2);
-			write(clients[i], names[ile], 100*sizeof(char));
-			write(clients[ile], names[i], 100*sizeof(char));
+			write(clients[i], names[ile], 100);
+			write(clients[ile], names[i], 100);
 		}
 		
 	}
 	
-	write(clients[ile], "#\n", 2);
+	write(clients[ile], "#\n", 2*sizeof(char));
 	
 
 	//wysyłanie do wszystkich klientow nazwy nowo podlaczonego klienta
@@ -156,3 +206,6 @@ ile=0;
    close(server_socket_descriptor);
    return(0);
 }
+
+
+
