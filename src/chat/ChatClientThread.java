@@ -75,8 +75,9 @@ public class ChatClientThread implements Runnable {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            ChatPageController.getInstance().getChatPane().getItems().setAll(ChatPageController.getInstance().getMessages());
-                            ChatPageController.getInstance().getChatPane().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                            ChatPageController.getInstance().setApropriateMessagesInWindow();
+//                            ChatPageController.getInstance().getChatPane().getItems().setAll(ChatPageController.getInstance().getMessages());
+//                            ChatPageController.getInstance().getChatPane().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
                         }
                     });
