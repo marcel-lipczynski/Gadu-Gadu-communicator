@@ -17,28 +17,27 @@ import java.util.List;
 
 public class ChatPageController {
 
-    private ChatClient chatClient ;
+    private ChatClient chatClient;
 //            = new ChatClient(LoginPageController.getInstance().getAddress().getText(),
 //            Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
 //            LoginPageController.getInstance().getUsername_id().getText());
 
-    private Thread messageReader ;
+    private Thread messageReader;
 //            = new Thread(new ChatClientThread(chatClient));
-
 
 
     private static ChatPageController instance;
 
     public ChatPageController() {
         instance = this;
-        try{
+        try {
             chatClient = new ChatClient(LoginPageController.getInstance().getAddress().getText(),
                     Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
                     LoginPageController.getInstance().getUsername_id().getText());
             messageReader = new Thread(new ChatClientThread(chatClient));
             messageReader.start();
             chatClient.sendMessage(chatClient.getName());
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Something went horribly wrong: " + e.getMessage());
         }
 
@@ -46,6 +45,7 @@ public class ChatPageController {
 
     //whoToSend - zmienna ktora wskaze komu wyslac wiadomosc, ustawia sie po wybraniu uzytkownika z listy!
     private String whoToSend;
+    private List<String> messagesToShowOnPane = new ArrayList<>();
     private List<String> messages = new ArrayList<>();
     private List<String> users = new ArrayList<>();
 
@@ -68,26 +68,52 @@ public class ChatPageController {
         text = chatClient.getName() + ":" + whoToSend + ":" + text;
         messages.add(text);
 
+
+//        setApropriateMessagesInWindow();
 //      Informujemy serwer do kogo ma zostać przekazana wiadomość
 //        chatClient.sendMessage(whoToSend);
 //
-        chatPane.getItems().setAll(messages);
-        chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+//        chatPane.getItems().setAll(messages);
+//        chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         chatClient.sendMessage(text);
+
+        setApropriateMessagesInWindow();
+
+        System.out.println("Nacisnales send. Wysylam do : " + whoToSend);
 
 
         messageBox.clear();
     }
 
     @FXML
-    public void handleClickListView(){
+    public void handleClickListView() {
+        //kiedy klikasz na jakiegos uzytkownika to czyscisz
+        messageBox.clear();
         whoToSend = (String) userList.getSelectionModel().getSelectedItem();
         System.out.println(whoToSend);
+
+
+        setApropriateMessagesInWindow();
+//        messagesToShowOnPane.clear();
+//        String[] splittedMessage;
+//
+//        for (String message : messages) {
+//            splittedMessage = message.split(":", 3);
+//            if (splittedMessage[0].equals(chatClient.getName()) && splittedMessage[1].equals(whoToSend)) {
+//                messagesToShowOnPane.add(splittedMessage[0] + ":" + splittedMessage[2]);
+//
+//            }
+//            if (splittedMessage[0].equals(whoToSend) && splittedMessage[1].equals(chatClient.getName())) {
+//                messagesToShowOnPane.add(splittedMessage[0] + ":" + splittedMessage[2]);
+//            }
+//        }
+//        chatPane.getItems().setAll(messagesToShowOnPane);
+//        chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
 
     @FXML
-    public void handleEnterKey(KeyEvent event){
+    public void handleEnterKey(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             handleSendButtonClick();
         }
@@ -128,4 +154,22 @@ public class ChatPageController {
     public void setWhoToSend(String whoToSend) {
         this.whoToSend = whoToSend;
     }
+
+    public void setApropriateMessagesInWindow() {
+        messagesToShowOnPane.clear();
+        for (String message : messages) {
+            String[] splittedMessage;
+            splittedMessage = message.split(":", 3);
+            if (splittedMessage[0].equals(chatClient.getName()) && splittedMessage[1].equals(whoToSend)) {
+                messagesToShowOnPane.add(splittedMessage[0] + ":" + splittedMessage[2]);
+
+            }
+            if (splittedMessage[0].equals(whoToSend) && splittedMessage[1].equals(chatClient.getName())) {
+                messagesToShowOnPane.add(splittedMessage[0] + ":" + splittedMessage[2]);
+            }
+        }
+        chatPane.getItems().setAll(messagesToShowOnPane);
+        chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    }
 }
+
