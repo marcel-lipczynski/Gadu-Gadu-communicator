@@ -46,6 +46,7 @@ public class ChatPageController {
 
     //whoToSend - zmienna ktora wskaze komu wyslac wiadomosc, ustawia sie po wybraniu uzytkownika z listy!
     private String whoToSend;
+    private List<String> messagesToShowOnPane = new ArrayList<>();
     private List<String> messages = new ArrayList<>();
     private List<String> users = new ArrayList<>();
 
@@ -81,8 +82,26 @@ public class ChatPageController {
 
     @FXML
     public void handleClickListView(){
+        //kiedy klikasz na jakiegos uzytkownika to czyscisz
+        messageBox.clear();
+        messagesToShowOnPane.clear();
+
+        String[] splittedMessage;
         whoToSend = (String) userList.getSelectionModel().getSelectedItem();
         System.out.println(whoToSend);
+
+        for (String message: messages){
+            splittedMessage = message.split(":",3);
+            if(splittedMessage[0].equals(chatClient.getName()) && splittedMessage[1].equals(whoToSend)){
+                messagesToShowOnPane.add(splittedMessage[0] + ":" + splittedMessage[2]);
+
+            }
+            if(splittedMessage[0].equals(whoToSend) && splittedMessage[1].equals(chatClient.getName())){
+                messagesToShowOnPane.add(splittedMessage[0] + ":" + splittedMessage[2]);
+            }
+        }
+        chatPane.getItems().setAll(messagesToShowOnPane);
+        chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
 
