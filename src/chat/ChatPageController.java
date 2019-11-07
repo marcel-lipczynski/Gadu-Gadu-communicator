@@ -44,8 +44,8 @@ public class ChatPageController {
 
     }
 
-    //    private LoginPageController loginPageController;
-
+    //whoToSend - zmienna ktora wskaze komu wyslac wiadomosc, ustawia sie po wybraniu uzytkownika z listy!
+    private String whoToSend;
     private List<String> messages = new ArrayList<>();
     private List<String> users = new ArrayList<>();
 
@@ -65,16 +65,15 @@ public class ChatPageController {
     public void handleSendButtonClick() {
 
         String text = messageBox.getText();
-        text = chatClient.getName() + ": " + text;
+        text = chatClient.getName() + ":" + whoToSend + ":" + text;
         messages.add(text);
-//        users.add(LoginPageController.getInstance().getUsername_id().getText());
 
+//      Informujemy serwer do kogo ma zostać przekazana wiadomość
+//        chatClient.sendMessage(whoToSend);
+//
         chatPane.getItems().setAll(messages);
         chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         chatClient.sendMessage(text);
-
-//        userList.getItems().setAll(users);
-//        userList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 
         messageBox.clear();
@@ -82,7 +81,8 @@ public class ChatPageController {
 
     @FXML
     public void handleClickListView(){
-        System.out.println(userList.getSelectionModel().getSelectedItem());
+        whoToSend = (String) userList.getSelectionModel().getSelectedItem();
+        System.out.println(whoToSend);
     }
 
 
@@ -119,5 +119,13 @@ public class ChatPageController {
 
     public ListView getUserList() {
         return userList;
+    }
+
+    public String getWhoToSend() {
+        return whoToSend;
+    }
+
+    public void setWhoToSend(String whoToSend) {
+        this.whoToSend = whoToSend;
     }
 }
