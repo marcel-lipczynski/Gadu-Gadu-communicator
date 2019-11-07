@@ -36,7 +36,7 @@
     <left>
         <VBox maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
             <children>
-                <ListView fx:id="userList" focusTraversable="false" maxHeight="1.7976931348623157E308"
+                <ListView fx:id="userList" onMouseClicked="#handleClickListView" focusTraversable="false" maxHeight="1.7976931348623157E308"
                           prefHeight="600.0" prefWidth="217.0">
                 </ListView>
             </children>
