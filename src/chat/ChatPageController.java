@@ -65,10 +65,11 @@ public class ChatPageController {
     public void handleSendButtonClick() {
 
         String text = messageBox.getText();
+        text = chatClient.getName() + ": " + text;
         messages.add(text);
 //        users.add(LoginPageController.getInstance().getUsername_id().getText());
 
-        chatPane.getItems().setAll(LoginPageController.getInstance().getUsername_id().getText()+": "+messages);
+        chatPane.getItems().setAll(messages);
         chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         chatClient.sendMessage(text);
 
@@ -78,6 +79,12 @@ public class ChatPageController {
 
         messageBox.clear();
     }
+
+    @FXML
+    public void handleClickListView(){
+        System.out.println(userList.getSelectionModel().getSelectedItem());
+    }
+
 
     @FXML
     public void handleEnterKey(KeyEvent event){
