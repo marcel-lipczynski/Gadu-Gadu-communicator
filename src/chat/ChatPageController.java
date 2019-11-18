@@ -36,6 +36,9 @@ public class ChatPageController {
                     LoginPageController.getInstance().getUsername_id().getText());
             messageReader = new Thread(new ChatClientThread(chatClient));
             messageReader.start();
+
+//            chatClient.sendMessage(Integer.toString(chatClient.getName().length()));
+            chatClient.sendLength(chatClient.getName().length());
             chatClient.sendMessage(chatClient.getName());
         } catch (Exception e) {
             System.out.println("Something went horribly wrong: " + e.getMessage());
@@ -75,6 +78,7 @@ public class ChatPageController {
 //
 //        chatPane.getItems().setAll(messages);
 //        chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        chatClient.sendLength(text.length());
         chatClient.sendMessage(text);
 
         setApropriateMessagesInWindow();

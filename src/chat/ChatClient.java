@@ -23,7 +23,16 @@ public class ChatClient {
     }
 
     public void sendMessage(String message) {
-        msgToServer.println(message);
+//        message = message + "\n";
+//        System.out.println("Message length: " + message.length());
+//        msgToServer.println(message);
+        msgToServer.write(message, 0 , message.length());
+        msgToServer.flush();
+    }
+
+    public void sendLength(int length){
+        msgToServer.write(length);
+        msgToServer.flush();
     }
 
     public Socket getSocket() {
