@@ -10,19 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/chat/chat.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ChatApplication/chat/ChatClientThread$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ChatApplication/chat/ChatClientThread$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ChatApplication/chat/ChatClientThread$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ChatApplication/chat/ChatClientThread$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ChatApplication/chat/ChatClientThread$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ChatApplication/chat/ChatClientThread$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ChatApplication/chat/ChatClientThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ChatApplication/chat/ChatClientThread.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ChatApplication/chat/ChatPageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ChatApplication/chat/ChatPageController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ChatApplication/chat/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ChatApplication/chat/chat.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ChatApplication/login/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ChatApplication/login/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chat/ChatClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatClientThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chat/ChatPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/chat.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/login/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/login/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/clients_logic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/clients_logic/Main.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -234,7 +229,7 @@
       <workItem from="1573919388389" duration="1834000" />
       <workItem from="1573931236319" duration="580000" />
       <workItem from="1574076201178" duration="26298000" />
-      <workItem from="1574178022141" duration="2701000" />
+      <workItem from="1574178022141" duration="20258000" />
     </task>
     <servers />
   </component>

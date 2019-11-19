@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import login.LoginPageController;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,9 +75,17 @@ public class ChatPageController {
 
 
     @FXML
-    public void closeButtonClick(){
+    public void closeButtonClick() throws IOException {
         Stage stage = (Stage) closeButton.getScene().getWindow();
-
+        String close = chatClient.getName()+":"+"#!#";
+        chatClient.sendLength(close.length());
+        chatClient.sendMessage(close);
+        try {
+            chatClient.getSocket().close();
+        } catch (IOException e) {
+            System.out.println("Unable to close client socket");
+            e.printStackTrace();
+        }
         chatClientThread.stop();
         stage.close();
         System.exit(0);
@@ -84,7 +93,7 @@ public class ChatPageController {
 
 
     @FXML
-    public void handleSendButtonClick() {
+    public void handleSendButtonClick() throws IOException {
 
         String text = messageBox.getText();
         text = chatClient.getName() + ":" + whoToSend + ":" + text;
@@ -136,7 +145,7 @@ public class ChatPageController {
 
 
     @FXML
-    public void handleEnterKey(KeyEvent event) {
+    public void handleEnterKey(KeyEvent event) throws IOException {
         if (event.getCode() == KeyCode.ENTER) {
             handleSendButtonClick();
         }

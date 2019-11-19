@@ -67,7 +67,25 @@ public class ChatClientThread implements Runnable {
                         }
                     });
 
-                } else{
+                }else if(receivedMessage.trim().equals("#!#")){
+                    //jesli otrzymales sekwencje mowiaca o tym ze uzytkownik sie wylogowuje to go usun z listy uzytkownikow
+                    receivedMessage = reader.readLine().trim();
+                    String[] splittedMessage;
+                    splittedMessage = receivedMessage.split(":");
+                    ChatPageController.getInstance().getUsers().remove(splittedMessage[0]);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            ChatPageController.getInstance().getUserList().getItems().setAll(ChatPageController.getInstance().getUsers());
+                            ChatPageController.getInstance().getUserList().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                        }
+                    });
+
+
+
+
+
+                }else{
                     System.out.println(receivedMessage.trim());
                     ChatPageController.getInstance().getMessages().add(receivedMessage.trim());
 
