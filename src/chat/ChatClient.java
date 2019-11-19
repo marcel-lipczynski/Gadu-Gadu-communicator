@@ -10,7 +10,7 @@ import java.nio.ByteOrder;
 public class ChatClient {
 
     private Socket socket;
-//    private PrintWriter msgToServer;
+    private PrintWriter msgToServer2;
     private DataOutputStream msgToServer;
     private String name;
 
@@ -19,7 +19,7 @@ public class ChatClient {
         try {
             this.name = name;
             this.socket = new Socket(serverAddress, port);
-//            msgToServer = new PrintWriter(socket.getOutputStream(),true);
+            msgToServer2 = new PrintWriter(socket.getOutputStream(),true);
             msgToServer = new DataOutputStream(socket.getOutputStream());
             //            msgToServer.println(name); -> Message should be send after creating ne
 //            w ChatClientThread
@@ -35,7 +35,9 @@ public class ChatClient {
 //        msgToServer.println(message);
 //        msgToServer.write(message, 0 , message.length());
 //        msgToServer.flush();
-        msgToServer.writeBytes(message);
+//        msgToServer.writeBytes(message);
+        msgToServer2.print(message);
+        msgToServer2.flush();
     }
 
     public void sendLength(int length) throws IOException {
