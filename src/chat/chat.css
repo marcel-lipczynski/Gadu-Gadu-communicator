@@ -1,0 +1,22 @@
+#send {
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+}
+
+#close {
+    -fx-background-color: linear-gradient(#ff5400, #be1d00);
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+
+}
+
+#login {
+    -fx-font-weight: bold;
+
+}
+
+#messageBox {
+    -fx-border-color: white;
+}

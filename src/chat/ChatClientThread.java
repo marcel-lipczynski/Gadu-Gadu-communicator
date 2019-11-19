@@ -1,6 +1,5 @@
 package chat;
 
-import chat.ChatClient;
 import javafx.application.Platform;
 import javafx.scene.control.SelectionMode;
 
@@ -9,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ChatClientThread implements Runnable {
-
+    private volatile boolean exit = false;
     private ChatClient chatClient;
     private BufferedReader reader;
     private String receivedMessage = null;
@@ -28,7 +27,7 @@ public class ChatClientThread implements Runnable {
 
     @Override
     public void run() {
-        while(true){
+        while(!exit){
             read();
         }
     }
@@ -75,7 +74,7 @@ public class ChatClientThread implements Runnable {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            ChatPageController.getInstance().setApropriateMessagesInWindow();
+                            ChatPageController.getInstance().setAppropriateMessagesInWindow();
 //                            ChatPageController.getInstance().getChatPane().getItems().setAll(ChatPageController.getInstance().getMessages());
 //                            ChatPageController.getInstance().getChatPane().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -88,6 +87,10 @@ public class ChatClientThread implements Runnable {
         } catch (IOException e) {
             System.out.println("Reading data from server went wrong: " + e.getMessage());
         }
+    }
+
+    public void stop(){
+        exit = true;
     }
 
 

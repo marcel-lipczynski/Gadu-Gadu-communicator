@@ -1,16 +1,17 @@
 package chat;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import login.LoginPageController;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class ChatPageController {
 
     private Thread messageReader;
 //            = new Thread(new ChatClientThread(chatClient));
+    private ChatClientThread chatClientThread;
 
 
     private static ChatPageController instance;
@@ -34,7 +36,8 @@ public class ChatPageController {
             chatClient = new ChatClient(LoginPageController.getInstance().getAddress().getText(),
                     Integer.parseInt(LoginPageController.getInstance().getPort().getText()),
                     LoginPageController.getInstance().getUsername_id().getText());
-            messageReader = new Thread(new ChatClientThread(chatClient));
+            chatClientThread = new ChatClientThread(chatClient);
+            messageReader = new Thread(chatClientThread);
             messageReader.start();
 
 //            chatClient.sendMessage(Integer.toString(chatClient.getName().length()));
@@ -42,6 +45,7 @@ public class ChatPageController {
             chatClient.sendMessage(chatClient.getName());
         } catch (Exception e) {
             System.out.println("Something went horribly wrong: " + e.getMessage());
+//            System.exit(1);
         }
 
     }
@@ -51,6 +55,10 @@ public class ChatPageController {
     private List<String> messagesToShowOnPane = new ArrayList<>();
     private List<String> messages = new ArrayList<>();
     private List<String> users = new ArrayList<>();
+
+
+    @FXML
+    private Button closeButton;
 
     @FXML
     private ListView userList;
@@ -63,6 +71,17 @@ public class ChatPageController {
 
     @FXML
     private ListView chatPane;
+
+
+    @FXML
+    public void closeButtonClick(){
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+
+        chatClientThread.stop();
+        stage.close();
+        System.exit(0);
+    }
+
 
     @FXML
     public void handleSendButtonClick() {
@@ -81,7 +100,7 @@ public class ChatPageController {
         chatClient.sendLength(text.length());
         chatClient.sendMessage(text);
 
-        setApropriateMessagesInWindow();
+        setAppropriateMessagesInWindow();
 
         System.out.println("Nacisnales send. Wysylam do : " + whoToSend);
 
@@ -97,7 +116,7 @@ public class ChatPageController {
         System.out.println(whoToSend);
 
 
-        setApropriateMessagesInWindow();
+        setAppropriateMessagesInWindow();
 //        messagesToShowOnPane.clear();
 //        String[] splittedMessage;
 //
@@ -159,7 +178,7 @@ public class ChatPageController {
         this.whoToSend = whoToSend;
     }
 
-    public void setApropriateMessagesInWindow() {
+    public void setAppropriateMessagesInWindow() {
         messagesToShowOnPane.clear();
         for (String message : messages) {
             String[] splittedMessage;
