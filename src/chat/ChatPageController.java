@@ -62,7 +62,7 @@ public class ChatPageController {
     private Button closeButton;
 
     @FXML
-    private ListView userList;
+    private ListView<String> userList;
 
     @FXML
     private Text loggedAs;
@@ -71,7 +71,7 @@ public class ChatPageController {
     private TextArea messageBox;
 
     @FXML
-    private ListView chatPane;
+    private ListView<String> chatPane;
 
 
     @FXML
@@ -126,21 +126,7 @@ public class ChatPageController {
 
 
         setAppropriateMessagesInWindow();
-//        messagesToShowOnPane.clear();
-//        String[] splittedMessage;
-//
-//        for (String message : messages) {
-//            splittedMessage = message.split(":", 3);
-//            if (splittedMessage[0].equals(chatClient.getName()) && splittedMessage[1].equals(whoToSend)) {
-//                messagesToShowOnPane.add(splittedMessage[0] + ":" + splittedMessage[2]);
-//
-//            }
-//            if (splittedMessage[0].equals(whoToSend) && splittedMessage[1].equals(chatClient.getName())) {
-//                messagesToShowOnPane.add(splittedMessage[0] + ":" + splittedMessage[2]);
-//            }
-//        }
-//        chatPane.getItems().setAll(messagesToShowOnPane);
-//        chatPane.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
     }
 
 
@@ -163,7 +149,7 @@ public class ChatPageController {
         return messages;
     }
 
-    public ListView getChatPane() {
+    public ListView<String> getChatPane() {
         return chatPane;
     }
 
@@ -175,7 +161,7 @@ public class ChatPageController {
         return users;
     }
 
-    public ListView getUserList() {
+    public ListView<String> getUserList() {
         return userList;
     }
 

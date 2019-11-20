@@ -1,6 +1,8 @@
 package chat;
 
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.SelectionMode;
 
 import java.io.BufferedReader;
@@ -36,6 +38,27 @@ public class ChatClientThread implements Runnable {
         try {
             if(newlyConnected){
                 while(!(receivedMessage = reader.readLine()).trim().equals("#")){
+
+                    if(receivedMessage.equals("")){
+                        System.out.println("LOGIN ZAJETY!");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                               alert.setTitle("Nickname already used");
+                               alert.setHeaderText(null);
+                               alert.setContentText("Please try choosing another nickname");
+
+                               alert.showAndWait();
+                               System.exit(0);
+                            }
+                        });
+//                        ChatPageController.getInstance().getChatPane().getItems().set(0,"NICKNAME IN USE");
+//                        ChatPageController.getInstance().getChatPane().getItems().set(0,"NICKNAME IN USE");
+
+                    }
+
+
                     System.out.println("Received message: " + receivedMessage + " " +
                             "length: " + receivedMessage.trim().length());
 
@@ -55,15 +78,17 @@ public class ChatClientThread implements Runnable {
             }
 
 
+
             if ((receivedMessage = reader.readLine()) != null) {
                 if(receivedMessage.trim().equals("#")){
+                    System.out.println("Odbieram login uzytkownika\n");
                     //If server sends "#" character, it means that next message to send is new Clients nickname;
                     ChatPageController.getInstance().getUsers().add(reader.readLine().trim());
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             ChatPageController.getInstance().getUserList().getItems().setAll(ChatPageController.getInstance().getUsers());
-                            ChatPageController.getInstance().getUserList().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+//                            ChatPageController.getInstance().getUserList().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
                         }
                     });
 
@@ -72,12 +97,19 @@ public class ChatClientThread implements Runnable {
                     receivedMessage = reader.readLine().trim();
                     String[] splittedMessage;
                     splittedMessage = receivedMessage.split(":");
-                    ChatPageController.getInstance().getUsers().remove(splittedMessage[0]);
+                    int index = ChatPageController.getInstance().getUsers().indexOf(splittedMessage[0]);
+                    System.out.println(splittedMessage[0] + " is disconnecting. Deleting index " + index);
+                    ChatPageController.getInstance().getUsers().remove(index);
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
+                            System.out.println("Updating the view!");
+                            if(ChatPageController.getInstance().getWhoToSend().equals(splittedMessage[0])){
+                                ChatPageController.getInstance().getChatPane().getItems().clear();
+                            }
+                            ChatPageController.getInstance().getUserList().getItems().clear();
                             ChatPageController.getInstance().getUserList().getItems().setAll(ChatPageController.getInstance().getUsers());
-                            ChatPageController.getInstance().getUserList().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+//                            ChatPageController.getInstance().getUserList().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
                         }
                     });
 
@@ -107,7 +139,8 @@ public class ChatClientThread implements Runnable {
         }
     }
 
-    public void stop(){
+    public void stop() throws IOException {
+        reader.close();
         exit = true;
     }
 
